@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mvr.cbm.clickhouse.mapper.OeeMapper">
+
+    <resultMap id="oeeResultMap" type="com.mvr.cbm.clickhouse.domain.Oee">
+        <id column="id" property="id" />
+        <result column="availability" property="availability" />
+        <result column="performance" property="performance" />
+        <result column="quality" property="quality" />
+        <result column="oee" property="oee" />
+    </resultMap>
+
+    <insert id="save" parameterType="com.mvr.cbm.clickhouse.domain.Oee" >
+        INSERT INTO cbm.oee
+        (id,availability,performance,quality,oee,device_id,global_uuid,create_time,factory_name,factory_id,schedule_id,line_name,line_id,device)
+        VALUES
+        (#{id},#{availability},#{performance},#{quality},#{oee},#{deviceId},#{globalUuid},#{createTime},#{factoryName},#{factoryId},#{scheduleId},#{lineName},#{lineId},#{device})
+    </insert>
+    
+    <select id="selectByDeviceId" resultMap="oeeResultMap">
+    	select 
+    		id,availability,performance,quality,oee
+    	from
+    		oee
+    	where 
+    		device = #{deviceId} 
+    	ORDER by create_time DESC LIMIT  1
+    </select>
+
+
+</mapper>
